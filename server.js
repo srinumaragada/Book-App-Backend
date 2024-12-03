@@ -18,7 +18,7 @@ mongoose.connect("mongodb+srv://sreenu:srinumaragada%40123@cluster0.znzs0.mongod
 
 
 app.use(cors({
-    origin: ["http://localhost:5173"], 
+    origin: ["http://localhost:5173","https://book-app-frontend-puce.vercel.app"], 
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: [
         "Content-Type",
@@ -30,6 +30,10 @@ app.use(cors({
     credentials: true
 }));
 
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://vercel.live;");
+    next();
+  });
 
 app.use("/api/books",Bookrouter)
 app.use("/api/orders",OrderRouter)
