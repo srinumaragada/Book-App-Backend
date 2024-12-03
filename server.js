@@ -31,9 +31,17 @@ app.use(cors({
 }));
 
 app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' https://vercel.live;");
+    res.setHeader(
+        "Content-Security-Policy",
+        "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://cdn.jsdelivr.net; " + 
+        "connect-src 'self' https://vercel.live https://api.vercel.com; " +
+        "img-src 'self' data: https://images.unsplash.com; " +
+        "style-src 'self' 'unsafe-inline'; " + 
+        "font-src 'self';"
+    );
     next();
-  });
+});
 
 app.use("/api/books",Bookrouter)
 app.use("/api/orders",OrderRouter)
